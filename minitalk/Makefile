@@ -1,13 +1,19 @@
-CC = CC
+CC = cc
 CFLAGS = -Wall -Wextra -Werror
 NAME_CLIENT = client
 NAME_SERVER = server
+NAME_CLIENT_BONUS = client_bonus
+NAME_SERVER_BONUS = server_bonus
 
-SRC_CLIENT = client.c
-SRC_SERVER = server.c
+SRC_CLIENT = client.c utils.c
+SRC_SERVER = server.c utils.c
+SRC_CLIENT_BONUS = client_bonus.c utils.c
+SRC_SERVER_BONUS = server_bonus.c utils.c
 
 OBJ_CLIENT = $(SRC_CLIENT:.c=.o)
 OBJ_SERVER = $(SRC_SERVER:.c=.o)
+OBJ_CLIENT_BONUS = $(SRC_CLIENT_BONUS:.c=.o)
+OBJ_SERVER_BONUS = $(SRC_SERVER_BONUS:.c=.o)
 
 all: $(NAME_CLIENT) $(NAME_SERVER)
 
@@ -17,10 +23,20 @@ $(NAME_CLIENT): $(OBJ_CLIENT)
 $(NAME_SERVER): $(OBJ_SERVER)
 	$(CC) $(CFLAGS) -o $(NAME_SERVER) $(OBJ_SERVER)
 
+bonus: $(NAME_CLIENT_BONUS) $(NAME_SERVER_BONUS)
+
+$(NAME_CLIENT_BONUS): $(OBJ_CLIENT_BONUS)
+	$(CC) $(CFLAGS) -o $(NAME_CLIENT_BONUS) $(OBJ_CLIENT_BONUS)
+
+$(NAME_SERVER_BONUS): $(OBJ_SERVER_BONUS)
+	$(CC) $(CFLAGS) -o $(NAME_SERVER_BONUS) $(OBJ_SERVER_BONUS)
+
 clean: 
 	rm -f $(OBJ_CLIENT) $(OBJ_SERVER)
+	rm -f $(OBJ_CLIENT_BONUS) $(OBJ_SERVER_BONUS)
 
 fclean: clean
 	rm -f $(NAME_CLIENT) $(NAME_SERVER)
+	rm -f $(NAME_CLIENT_BONUS) $(NAME_SERVER_BONUS)
 
 re: fclean all

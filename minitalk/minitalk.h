@@ -6,7 +6,7 @@
 /*   By: hmnasfa <hmnasfa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 10:02:47 by hmnasfa           #+#    #+#             */
-/*   Updated: 2025/02/11 10:18:57 by hmnasfa          ###   ########.fr       */
+/*   Updated: 2025/02/15 09:10:03 by hmnasfa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 #include <signal.h>
 #include <unistd.h>
 #include <stdlib.h>
-#include <stdio.h>
 
-
+void	ft_putstr_fd(char *s, int fd);
+void	ft_putnbr_fd(int n, int fd);
+void	ft_putchar_fd(char c, int fd);
+int		ft_atoi(const char *str);
 
 #endif

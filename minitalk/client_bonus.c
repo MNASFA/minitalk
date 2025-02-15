@@ -1,18 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hmnasfa <hmnasfa@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/11 10:02:13 by hmnasfa           #+#    #+#             */
-/*   Updated: 2025/02/15 15:29:49 by hmnasfa          ###   ########.fr       */
+/*   Created: 2025/02/15 13:39:33 by hmnasfa           #+#    #+#             */
+/*   Updated: 2025/02/15 18:54:15 by hmnasfa          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void send_signal(pid_t pid, char c)
+void	acknowledge_signal(int signum)
+{
+	if (signum == SIGUSR1)
+		ft_putstr_fd("Dooooone", 1);
+}
+
+void	send_signal(pid_t pid, char c)
 {
 	int bit;
 	
@@ -23,7 +29,7 @@ void send_signal(pid_t pid, char c)
 		{
 			if (kill(pid, SIGUSR2) == -1)
 			{
-				ft_putstr_fd("Error : invalid argument !!", 1);
+				ft_putstr_fd("Error: Failed to send signal. Invalid PID or process does not complete.\n", 1);
 				exit(1);
 			}
 		}
@@ -31,7 +37,7 @@ void send_signal(pid_t pid, char c)
 		{
 			if (kill(pid, SIGUSR1) == -1)
 			{
-				ft_putstr_fd("Error : invalid argument !!", 1);
+				ft_putstr_fd("Error: Failed to send signal. Invalid PID or process does not complete.\n", 1);
 				exit(1);
 			}
 		}
@@ -41,7 +47,7 @@ void send_signal(pid_t pid, char c)
 	}
 	
 }
-
+ 
 int main(int ac, char **av)
 {
 	pid_t pid;
@@ -49,11 +55,12 @@ int main(int ac, char **av)
 
 	if (ac != 3)
 	{
-		ft_putstr_fd("Error : invalid argument !!", 1);
+		ft_putstr_fd("Usage :  ./client <PID> <MESSAGE TO SEND> !!\n", 1);
 		return (1);
 	}
 	
 	pid = ft_atoi(av[1]);
+	signal(SIGUSR1, acknowledge_signal);
 	i = 0;
 	while (av[2][i])
 	{
